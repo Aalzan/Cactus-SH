@@ -8,7 +8,7 @@
         /* Стили для плавающей кнопки с иконкой пользователя */
         .floating-button {
             position: fixed;
-            top: 20px; /* Иконка в верхней части экрана */
+            top: 20px;
             right: 20px;
             background-color: #008CBA;
             color: white;
@@ -26,24 +26,20 @@
 
         /* Визуальное оформление иконки пользователя */
         .floating-button::before {
-            content: "●●"; /* Простая иконка — безликое изображение */
+            content: "●●"; /* Иконка пользователя */
             font-size: 30px;
-            transform: rotate(0deg); /* Повернем обратно в нормальное положение */
             display: block;
         }
 
         /* Стили для окна информации */
         .modal {
-            display: none;
             position: absolute;
-            top: 80px; /* Окно чуть ниже иконки */
-            right: 20px;
+            display: none;
             background-color: white;
             padding: 20px;
             border-radius: 8px;
             width: 250px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
         }
 
         .modal-content h2 {
@@ -87,18 +83,27 @@
         const openModalBtn = document.getElementById('openModalBtn');
         const userModal = document.getElementById('userModal');
 
+        // Функция для отображения окна рядом с кнопкой
+        function updateModalPosition() {
+            const rect = openModalBtn.getBoundingClientRect(); // Получаем координаты кнопки
+            userModal.style.top = `${rect.bottom + window.scrollY}px`; // Модальное окно чуть ниже кнопки
+            userModal.style.left = `${rect.left + window.scrollX}px`; // По горизонтали выравниваем с кнопкой
+        }
+
         // Открытие модального окна при нажатии на иконку
         openModalBtn.onclick = function() {
             // Переключение между отображением и скрытием окна
-            userModal.style.display = userModal.style.display === 'block' ? 'none' : 'block';
-        }
-
-        // Закрытие окна при клике вне модального окна
-        window.onclick = function(event) {
-            if (event.target !== openModalBtn && event.target !== userModal && !userModal.contains(event.target)) {
+            if (userModal.style.display === 'block') {
                 userModal.style.display = 'none';
+            } else {
+                updateModalPosition(); // Обновляем позицию окна
+                userModal.style.display = 'block';
             }
         }
+
+        // Обновляем позицию окна при прокрутке и изменении размера окна
+        window.addEventListener('scroll', updateModalPosition);
+        window.addEventListener('resize', updateModalPosition);
     </script>
 
 </body>
