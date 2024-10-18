@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Button with User Icon and Modal</title>
+    <style>
+        /* Стили для плавающей кнопки с иконкой пользователя */
+        .floating-button {
+            position: fixed;
+            top: 20px; /* Иконка в верхней части экрана */
+            right: 20px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Визуальное оформление иконки пользователя */
+        .floating-button::before {
+            content: "●●"; /* Простая иконка — безликое изображение */
+            font-size: 30px;
+            transform: rotate(0deg); /* Повернем обратно в нормальное положение */
+            display: block;
+        }
+
+        /* Стили для окна информации */
+        .modal {
+            display: none;
+            position: absolute;
+            top: 80px; /* Окно чуть ниже иконки */
+            right: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            font-weight: bold;
+        }
+
+        .placeholder-btn {
+            margin-top: 20px;
+            background-color: #008CBA;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .placeholder-btn:hover {
+            background-color: #005f73;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Плавающая кнопка с иконкой пользователя -->
+    <div class="floating-button" id="openModalBtn"></div>
+
+    <!-- Окно информации о пользователе -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <h2 class="username">User123</h2>
+            <p><strong>Имя пользователя:</strong> User123</p>
+            <p><strong>Почта:</strong> user123@example.com</p>
+            <p><strong>Дата регистрации:</strong> 2023-10-18</p>
+            <button class="placeholder-btn">Placeholder</button>
+        </div>
+    </div>
+
+    <script>
+        // Получаем элементы
+        const openModalBtn = document.getElementById('openModalBtn');
+        const userModal = document.getElementById('userModal');
+
+        // Открытие модального окна при нажатии на иконку
+        openModalBtn.onclick = function() {
+            // Переключение между отображением и скрытием окна
+            userModal.style.display = userModal.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Закрытие окна при клике вне модального окна
+        window.onclick = function(event) {
+            if (event.target !== openModalBtn && event.target !== userModal && !userModal.contains(event.target)) {
+                userModal.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+</html>
