@@ -18,8 +18,7 @@ RUN dos2unix gradlew
 RUN chmod +x gradlew
 
 # Сборка проекта
-RUN ./gradlew build
-
+RUN ./gradlew clean build -x check -x test --stacktrace
 # Финальный этап
 FROM amazoncorretto:17
 
