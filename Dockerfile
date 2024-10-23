@@ -1,32 +1,29 @@
-# Указываем базовый образ с JDK
-FROM eclipse-temurin:17-jdk-alpine AS build
+# Use Amazon Corretto 17 as the base image
+FROM amazoncorretto:17
 
-# Устанавливаем рабочую директорию
+# Set the working directory in the container
 WORKDIR /app
 
-# Копируем файлы проекта
-COPY . .
+# Copy the Gradle build files
+COPY gradlew .
+COPY gradle/ gradle/
+COPY build.gradle .
+COPY settings.gradle .
 
-# Устанавливаем права на выполнение gradlew
+# Copy the source code
+COPY src/ ./src/
+
+# Make the Gradle wrapper executable
 RUN chmod +x gradlew
 
-# Собираем приложение
+# Build the application
 RUN ./gradlew clean build -x test
 
-# Создаем финальный образ
-FROM eclipse-temurin:17-jre-alpine
+# Copy the built jar file into the container
+COPY build/libs/*.jar app.jar
 
-# Указываем рабочую директорию
-WORKDIR /app
-
-# Копируем скомпилированный JAR файл из предыдущего образа
-COPY --from=build /app/build/libs/*.jar app.jar
-
-# Указываем, что приложение будет слушать на порту 8080
+# Expose the application port
 EXPOSE 8080
 
-# Устанавливаем переменные окружения
-ENV JAVA_OPTS=""
-
-# Запускаем приложение
-ENTRYPOINT ["java", "-jar", "-Dserver.port=8080", "app.jar"]
+# Command to run the application
+CMD ["java", "-jar", "app.jar"]
