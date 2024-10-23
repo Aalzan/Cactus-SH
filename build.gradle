@@ -12,7 +12,10 @@ java {
         languageVersion = JavaLanguageVersion.of(17)
     }
 }
-
+tasks.named('processResources') {
+    doNotTrackState()
+    exclude '**/images/??.png' // Исключите или измените путь к файлу, если нужно
+}
 repositories {
     mavenCentral()
     maven { url 'https://repo.spring.io/release' }
