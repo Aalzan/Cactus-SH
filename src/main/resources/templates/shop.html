@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Playfair+Display:700|Raleway:500,700'>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,900;1,900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: url('/images/background.png');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .container {
+            position: relative;
+            width: 400px;
+            height: 450px;
+        }
+
+        .container .thumb {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .container .thumb li {
+            list-style: none;
+            width: 100px;
+            height: 100px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            border-left: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 25px;
+            backdrop-filter: blur(4px);
+        }
+
+        .container .thumb li img {
+            width: 80%;
+            transition: 0.5s;
+        }
+
+        .container .thumb li:hover img {
+            transform: rotate(-35deg);
+        }
+
+        .container .imgBox {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 350px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            border-left: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 25px;
+            backdrop-filter: blur(4px);
+            padding: 60px 20px;
+            padding-left: 50px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .container .imgBox h2 {
+            color: #fff;
+            letter-spacing: 1;
+            text-align: center;
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .container .imgBox img {
+            width: 80%;
+            transition: 0.25s;
+        }
+
+        .container .imgBox .description {
+            color: #fff;
+            font-size: 1.1em;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .container .imgBox .btn {
+            position: absolute;
+            bottom: -30px;
+            background: #fff;
+            display: inline-block;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            font-weight: 500;
+            color: black;
+            transition: 0.25s;
+        }
+
+        .container .imgBox .btn:hover {
+            letter-spacing: 2px;
+        }
+
+        .wallet-icon {
+            position: absolute;
+            bottom: -120px;
+            right: 400px;
+            width: 50px;
+            height: 100px;
+        }
+
+        .wallet-icon svg {
+            fill: white;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="thumb">
+        <ul>
+            <li onmouseover="changeContent('Regular', '/images/regular.png', 'A simple cactus will brighten up your space')">
+                <img th:src="@{/images/regular.png}" alt="Regular Cactus">
+            </li>
+            <li onmouseover="changeContent('Gentleman', '/images/gentleman.png', 'A elegant cactus that will brighten up your day')">
+                <img th:src="@{/images/gentleman.png}" alt="Gentleman Cactus">
+            </li>
+            <li onmouseover="changeContent('Knight', '/images/strong.png', 'A bold and vibrant design that show user valor')">
+                <img th:src="@{/images/strong.png}" alt="Knight Cactus">
+            </li>
+        </ul>
+    </div>
+    <div class="imgBox">
+        <h2 id="productName">Regular</h2>
+        <img th:src="@{/images/regular.png}" alt="Regular Cactus" class="shoes">
+        <p class="description" id="productDescription">A simple cactus will brighten up your space</p>
+        <a th:href="@{/shop}" class="btn">Buy</a>
+    </div>
+
+    <div class="wallet-icon" onclick="connectMetaMask()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M21 7H5V5h16v2zm0-4H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 12H8v-2h8v2zM3 7h2v2H3V7zm2 10H3v-2h2v2zm16-6H8v-2h13v2z"/>
+        </svg>
+    </div>
+</div>
+<script>
+    function changeContent(name, src, description) {
+        document.querySelector('.shoes').src = src;
+        document.getElementById('productName').textContent = name;
+        document.getElementById('productDescription').textContent = description;
+    }
+</script>
+
+<!-- Вот тут будешь коннект к Кошельку делать удачи! -->
+<script>
+    async function connectMetaMask() {
+        if (typeof window.ethereum !== 'undefined') {
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                console.log("MetaMask подключен:", accounts[0]);
+                alert("MetaMask подключен: " + accounts[0]);
+            } catch (error) {
+                console.error("Ошибка при подключении MetaMask:", error);
+                alert("Ошибка при подключении MetaMask.");
+            }
+        } else {
+            console.log('MetaMask не установлен.');
+            alert('MetaMask не установлен. Пожалуйста, установите MetaMask.');
+        }
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+<script>
+    const connectButton = document.getElementById('connectButton');
+    const walletButton = document.getElementById('walletButton');
+    const generalStatus = document.getElementById('generalStatus');
+
+    const INFURA_API_KEY = '878f3ba78155442098521039603beebc'; // Ваш API ключ Infura
+    const INFURA_URL = `https://mainnet.infura.io/v3/${INFURA_API_KEY}`; // URL сети Ethereum
+
+    async function switchToEthereumNetwork() {
+        try {
+            if (typeof window.ethereum !== 'undefined') {
+                const web3 = new Web3(window.ethereum);
+                await window.ethereum.request({ method: 'eth_requestAccounts' }); // Запрос на подключение к MetaMask
+
+                // Проверяем сеть (Mainnet Ethereum)
+                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                if (chainId !== '0x1') {
+                    // Если сеть не Mainnet, предложить переключиться
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0x1' }], // Mainnet Ethereum chain ID
+                        });
+                    } catch (switchError) {
+                        console.error("Failed to switch network:", switchError);
+                        generalStatus.innerText = "Error switching network.";
+                        return;
+                    }
+                }
+
+                const accounts = await web3.eth.getAccounts();
+                const walletAddress = accounts[0];
+                walletButton.innerText = `Connected: ${shortenAddress(walletAddress)}`;
+                walletButton.style.display = 'block';
+                generalStatus.innerText = "Wallet connected successfully!";
+            } else {
+                alert('MetaMask not found. Please install MetaMask.');
+            }
+        } catch (error) {
+            console.error("Error connecting wallet:", error);
+            generalStatus.innerText = "Error connecting wallet.";
+        }
+    }
+
+    function shortenAddress(address) {
+        return address.slice(0, 6) + '...' + address.slice(-4);
+    }
+
+    connectButton.addEventListener('click', switchToEthereumNetwork);
+</script>
+</body>
+
+</html>
