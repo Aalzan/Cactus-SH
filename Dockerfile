@@ -6,7 +6,9 @@ FROM ghcr.io/railwayapp/nixpacks:ubuntu-1727136237
 WORKDIR /app
 
 # Копируем файлы проекта
-COPY . .
+COPY build.gradle ./
+COPY gradlew ./
+COPY src ./src
 
 # Устанавливаем dos2unix
 RUN yum install -y dos2unix
