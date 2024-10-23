@@ -1,20 +1,32 @@
-# Используем Gradle как базовый образ для сборки
-FROM gradle:7.4.0-jdk17 AS build
+# Указываем базовый образ с JDK
+FROM eclipse-temurin:17-jdk-alpine AS build
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем файлы проекта в контейнер
+# Копируем файлы проекта
 COPY . .
 
-# Выполняем сборку приложения
-RUN ./gradlew clean build -x test --no-daemon
+# Устанавливаем права на выполнение gradlew
+RUN chmod +x gradlew
 
-# Используем минимальный JDK образ для финального контейнера
-FROM openjdk:17-jdk-slim
+# Собираем приложение
+RUN ./gradlew clean build -x test
 
-# Копируем скомпилированный JAR файл из предыдущего этапа
+# Создаем финальный образ
+FROM eclipse-temurin:17-jre-alpine
+
+# Указываем рабочую директорию
+WORKDIR /app
+
+# Копируем скомпилированный JAR файл из предыдущего образа
 COPY --from=build /app/build/libs/*.jar app.jar
 
-# Определяем команду для запуска приложения
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+# Указываем, что приложение будет слушать на порту 8080
+EXPOSE 8080
+
+# Устанавливаем переменные окружения
+ENV JAVA_OPTS=""
+
+# Запускаем приложение
+ENTRYPOINT ["java", "-jar", "-Dserver.port=8080", "app.jar"]
