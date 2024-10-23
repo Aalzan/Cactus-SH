@@ -16,12 +16,12 @@ java {
 repositories {
     mavenCentral()
 }
-processResources {
-    exclude '**/images/??.png' // Замените на точное имя файла, если необходимо
-}
+
 
 processResources {
     exclude '**/images/????????????????.jpeg' // Замените на точное имя файла, если необходимо
+    exclude '**/images/??.png' // Замените на точное имя файла, если необходимо
+
 }
 dependencies {
     implementation 'org.web3j:core:4.9.4'
