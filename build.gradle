@@ -13,7 +13,7 @@ java {
     }
 }
 tasks.named('processResources') {
-    doNotTrackState()
+    
     exclude '**/images/*.png' // Исключаем все PNG файлы в папке images
 }
 repositories {
