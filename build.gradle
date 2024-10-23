@@ -13,8 +13,9 @@ java {
     }
 }
 tasks.named('processResources') {
-    exclude '**/images/*.*'
+    doNotTrackState()
 }
+
 
 
 repositories {
