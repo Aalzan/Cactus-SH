@@ -1,29 +1,35 @@
-# Use Amazon Corretto 17 as the base image
-FROM amazoncorretto:17
+# Этап сборки
+FROM amazoncorretto:17 AS build
 
-# Set the working directory in the container
+# Устанавливаем рабочий каталог для сборки
 WORKDIR /app
 
-# Copy the Gradle build files
-COPY gradlew .
-COPY gradle/ gradle/
-COPY build.gradle .
-COPY settings.gradle .
+# Копируем файлы проекта
+COPY . /app
 
-# Copy the source code
-COPY src/ ./src/
+# Устанавливаем dos2unix
+RUN yum install -y dos2unix
 
-# Make the Gradle wrapper executable
+# Преобразуем файл gradlew в Unix-формат
+RUN dos2unix gradlew
+
+# Даем разрешение на выполнение скрипта gradlew
 RUN chmod +x gradlew
 
-# Build the application
-RUN ./gradlew clean build -x test
+# Сборка проекта
+RUN ./gradlew build
 
-# Copy the built jar file into the container
-COPY build/libs/*.jar app.jar
+# Финальный этап
+FROM amazoncorretto:17
 
-# Expose the application port
+# Устанавливаем рабочий каталог для приложения
+WORKDIR /app
+
+# Копируем скомпилированный jar файл из предыдущего этапа
+COPY --from=build /app/build/libs/*.jar /app/app.jar
+
+# Сообщаем Docker о том, что контейнер слушает на порту 8080
 EXPOSE 8080
 
-# Command to run the application
-CMD ["java", "-jar", "app.jar"]
+# Определяем команду для запуска приложения
+CMD ["java", "-jar", "/app/app.jar"]
