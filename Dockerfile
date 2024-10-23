@@ -3,7 +3,7 @@ FROM amazoncorretto:17 AS build
 FROM ghcr.io/railwayapp/nixpacks:ubuntu-1727136237
 
 # Устанавливаем рабочий каталог для сборки
-WORKDIR /app
+WORKDIR /demo1
 
 # Копируем файлы проекта
 COPY build.gradle ./
