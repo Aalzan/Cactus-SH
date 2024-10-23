@@ -16,6 +16,7 @@ RUN ls -la /app/src/main/resources/images
 
 # Даем разрешение на выполнение скрипта gradlew
 RUN chmod +x gradlew
+RUN chmod -R 755 /app/src/main/resources/images
 
 RUN ls -la src/main/resources/images
 
