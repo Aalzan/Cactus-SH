@@ -15,15 +15,10 @@ java {
 
 repositories {
     mavenCentral()
-}
-
-
-tasks.named('processResources') {
-    doNotTrackState()
+    maven { url 'https://repo.spring.io/release' }
 }
 
 dependencies {
-    implementation 'org.web3j:core:4.9.4'
     implementation 'io.github.cdimascio:java-dotenv:5.2.2'
 
     // Spring Boot Starters
