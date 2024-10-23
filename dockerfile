@@ -1,15 +1,18 @@
-# Установите образ Gradle с OpenJDK
-FROM gradle:jdk17 AS build
+# Используем образ Gradle с OpenJDK
+FROM gradle:7.4.0-jdk17 AS build
 
-# Установите рабочую директорию
+# Установим рабочую директорию
 WORKDIR /app
 
-# Копируем файл build.gradle и загружаем зависимости
+# Копируем файлы Gradle
 COPY build.gradle settings.gradle ./
+# Копируем все остальные файлы
 COPY src ./src
-RUN gradle build --no-daemon -x test
 
-# Используем минимальный образ OpenJDK для запуска
+# Запускаем сборку
+RUN ./gradlew build -x test --no-daemon
+
+# Используем минимальный образ OpenJDK для выполнения
 FROM openjdk:17-jdk-slim
 
 # Указываем том для временных файлов
