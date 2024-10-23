@@ -13,9 +13,10 @@ java {
     }
 }
 tasks.named('processResources') {
-    
-    exclude '**/images/*.png' // Исключаем все PNG файлы в папке images
+    exclude '**/images/*.png'
+    exclude '**/images/*.jpeg' // Exclude problematic JPEG files
 }
+
 repositories {
     mavenCentral()
     maven { url 'https://repo.spring.io/release' }
