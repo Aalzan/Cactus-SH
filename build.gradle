@@ -16,7 +16,9 @@ java {
 repositories {
     mavenCentral()
 }
-
+processResources {
+    exclude '**/images/????????????????.jpeg' // Замените на точное имя файла, если необходимо
+}
 dependencies {
     implementation 'org.web3j:core:4.9.4'
     implementation 'io.github.cdimascio:java-dotenv:5.2.2'
