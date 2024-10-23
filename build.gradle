@@ -18,11 +18,10 @@ repositories {
 }
 
 
-processResources {
-    exclude '**/images/????????????????.jpeg' // Замените на точное имя файла, если необходимо
-    exclude '**/images/??.png' // Замените на точное имя файла, если необходимо
-
+tasks.named('processResources') {
+    doNotTrackState()
 }
+
 dependencies {
     implementation 'org.web3j:core:4.9.4'
     implementation 'io.github.cdimascio:java-dotenv:5.2.2'
