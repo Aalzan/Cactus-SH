@@ -14,7 +14,7 @@ java {
 }
 tasks.named('processResources') {
     doNotTrackState()
-    exclude '**/images/??.png' // Исключите или измените путь к файлу, если нужно
+    exclude '**/images/*.png' // Исключаем все PNG файлы в папке images
 }
 repositories {
     mavenCentral()
