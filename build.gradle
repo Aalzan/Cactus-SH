@@ -13,9 +13,9 @@ java {
     }
 }
 tasks.named('processResources') {
-    exclude '**/images/*.png'
-    exclude '**/images/*.jpeg' // Exclude problematic JPEG files
+    exclude '**/images/*.*'
 }
+
 
 repositories {
     mavenCentral()
