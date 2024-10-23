@@ -1,25 +1,20 @@
-# Используем образ Gradle с OpenJDK
+# Используем Gradle как базовый образ для сборки
 FROM gradle:7.4.0-jdk17 AS build
 
-# Установим рабочую директорию
+# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем файлы Gradle
-COPY build.gradle settings.gradle ./
-# Копируем все остальные файлы
-COPY src ./src
+# Копируем файлы проекта в контейнер
+COPY . .
 
-# Запускаем сборку
-RUN ./gradlew build -x test --no-daemon
+# Выполняем сборку приложения
+RUN ./gradlew clean build -x test --no-daemon
 
-# Используем минимальный образ OpenJDK для выполнения
+# Используем минимальный JDK образ для финального контейнера
 FROM openjdk:17-jdk-slim
 
-# Указываем том для временных файлов
-VOLUME /tmp
-
-# Копируем собранный .jar файл из предыдущего этапа
+# Копируем скомпилированный JAR файл из предыдущего этапа
 COPY --from=build /app/build/libs/*.jar app.jar
 
-# Указываем команду для запуска приложения
+# Определяем команду для запуска приложения
 ENTRYPOINT ["java", "-jar", "/app.jar"]
