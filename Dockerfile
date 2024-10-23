@@ -12,6 +12,7 @@ RUN yum install -y dos2unix
 
 # Преобразуем файл gradlew в Unix-формат
 RUN dos2unix gradlew
+RUN ls -la /app/src/main/resources/images
 
 # Даем разрешение на выполнение скрипта gradlew
 RUN chmod +x gradlew
