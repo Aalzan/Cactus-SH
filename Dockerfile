@@ -19,6 +19,8 @@ RUN dos2unix gradlew
 # Даем разрешение на выполнение скрипта gradlew
 RUN chmod +x gradlew
 
+RUN ls -la src/main/resources/images
+
 # Сборка проекта
 RUN ./gradlew clean build -x check -x test --stacktrace
 # Финальный этап
